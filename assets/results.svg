@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="180" viewBox="0 0 1200 180" role="img" aria-labelledby="t d">
+  <title id="t">Evaluation results</title>
+  <desc id="d">60 of 61 fields correct (98%). All 60 correct values sourced. 9.0 to 22.1 seconds per document on an 8-core CPU.</desc>
+  <style>
+    .bg{fill:#faf7f0}
+    .num{font:500 52px Georgia,'Times New Roman',serif;fill:#7c3420;letter-spacing:-1.5px}
+    .lbl{font:500 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#4e4942;letter-spacing:1.2px}
+    .rule{stroke:#d3cbb8;stroke-width:1}
+  </style>
+  <rect class="bg" width="1200" height="180" rx="16"/>
+  <text class="num" x="60" y="88">60 / 61</text>
+  <text class="lbl" x="60" y="122">FIELDS CORRECT · 98%</text>
+  <line class="rule" x1="400" y1="40" x2="400" y2="140"/>
+  <text class="num" x="440" y="88">60 / 60</text>
+  <text class="lbl" x="440" y="122">CORRECT VALUES SOURCED</text>
+  <line class="rule" x1="800" y1="40" x2="800" y2="140"/>
+  <text class="num" x="840" y="88">9–22 s</text>
+  <text class="lbl" x="840" y="122">PER DOCUMENT · 8-CORE CPU</text>
+</svg>

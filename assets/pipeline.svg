@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="t d">
+  <title id="t">How document-extractor works</title>
+  <desc id="d">A PDF or scan is read into words with page boxes (Florence-2 OCR for scans). A YAML schema drives field extraction into typed values. Each value is grounded back to the words on the page, giving JSON with page, bounding box and source text. A second path answers questions from retrieved passages with citations.</desc>
+  <style>
+    .bg{fill:#faf7f0}
+    .card{fill:#ffffff;stroke:#1c1915;stroke-width:1.5}
+    .hot{fill:#ffffff;stroke:#7c3420;stroke-width:2}
+    .k{font:600 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;fill:#7c3420}
+    .h{font:500 23px Georgia,'Times New Roman',serif;fill:#1c1915;letter-spacing:-.01em}
+    .s{font:14px Georgia,'Times New Roman',serif;fill:#4e4942}
+    .m{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#1c1915}
+    .wire{fill:none;stroke:#1c1915;stroke-width:1.5}
+    .flow{fill:none;stroke:#7c3420;stroke-width:3;stroke-linecap:round;stroke-dasharray:14 600;stroke-dashoffset:614}
+    .branch{fill:none;stroke:#1c1915;stroke-width:1.5;stroke-dasharray:5 5}
+    .tag{fill:#f3efe4;stroke:#d3cbb8}
+    @media (prefers-reduced-motion:no-preference){
+      .flow{animation:run 4.8s cubic-bezier(.55,.1,.35,1) infinite}
+      .f2{animation-delay:1.2s}.f3{animation-delay:2.4s}.f4{animation-delay:3.6s}
+      .pulse{animation:pulse 4.8s ease-in-out infinite}
+    }
+    @keyframes run{0%{stroke-dashoffset:614}35%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @keyframes pulse{0%,70%,100%{stroke-width:2}82%{stroke-width:4}}
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="420" rx="18"/>
+  <text class="k" x="40" y="48">PIPELINE · ONE COMMAND, FIVE STEPS</text>
+
+  <!-- wires -->
+  <path class="wire" d="M222 160H252"/><path class="wire" d="M452 160H482" transform="translate(-2 0)"/>
+  <path class="wire" d="M680 160H710"/><path class="wire" d="M908 160H938"/>
+  <path class="flow" d="M222 160H252"/><path class="flow f2" d="M450 160H480"/>
+  <path class="flow f3" d="M680 160H710"/><path class="flow f4" d="M908 160H938"/>
+  <path d="M246 154l8 6-8 6" fill="none" stroke="#1c1915" stroke-width="1.5"/>
+  <path d="M474 154l8 6-8 6" fill="none" stroke="#1c1915" stroke-width="1.5"/>
+  <path d="M704 154l8 6-8 6" fill="none" stroke="#1c1915" stroke-width="1.5"/>
+  <path d="M932 154l8 6-8 6" fill="none" stroke="#1c1915" stroke-width="1.5"/>
+
+  <!-- 1 input -->
+  <g transform="translate(40 80)">
+    <rect class="card" width="182" height="160" rx="10"/>
+    <g transform="translate(20 22)" fill="none" stroke="#1c1915" stroke-width="1.3">
+      <path d="M0 0h30l10 10v38H0z"/><path d="M30 0v10h10"/>
+      <path d="M7 20h24M7 28h24M7 36h16" stroke="#4e4942"/>
+    </g>
+    <text class="k" x="20" y="98">01 INPUT</text>
+    <text class="h" x="20" y="126">PDF or scan</text>
+    <text class="s" x="20" y="148">invoice, contract</text>
+  </g>
+  <!-- 2 read -->
+  <g transform="translate(254 80)">
+    <rect class="card" width="196" height="160" rx="10"/>
+    <g transform="translate(20 22)" fill="none" stroke="#1c1915" stroke-width="1.3">
+      <rect x="0" y="0" width="40" height="48" rx="2"/>
+      <rect x="5" y="7" width="22" height="7" stroke="#7c3420"/><rect x="5" y="20" width="30" height="7" stroke="#7c3420"/><rect x="5" y="33" width="16" height="7" stroke="#7c3420"/>
+    </g>
+    <text class="k" x="20" y="98">02 READ</text>
+    <text class="h" x="20" y="126">Words + boxes</text>
+    <text class="s" x="20" y="148">OCR for scanned pages</text>
+  </g>
+  <!-- 3 extract -->
+  <g transform="translate(482 80)">
+    <rect class="card" width="198" height="160" rx="10"/>
+    <g transform="translate(20 22)">
+      <text class="m" x="0" y="12">total:</text><text class="m" x="0" y="30" fill="#4e4942" xml:space="preserve">  type: number</text><text class="m" x="0" y="48" fill="#4e4942">due_date: date</text>
+    </g>
+    <text class="k" x="20" y="98">03 EXTRACT</text>
+    <text class="h" x="20" y="126">Schema → values</text>
+    <text class="s" x="20" y="148">a YAML file, no code</text>
+  </g>
+  <!-- 4 ground -->
+  <g transform="translate(712 80)">
+    <rect class="card" width="196" height="160" rx="10"/>
+    <g transform="translate(20 22)" fill="none" stroke-width="1.3">
+      <rect x="0" y="12" width="44" height="18" stroke="#7c3420"/>
+      <path d="M50 21h22" stroke="#1c1915"/><path d="M66 15l7 6-7 6" stroke="#1c1915"/>
+      <text class="m" x="80" y="26" fill="#7c3420" stroke="none">p.1</text>
+    </g>
+    <text class="k" x="20" y="98">04 GROUND</text>
+    <text class="h" x="20" y="126">Value → page</text>
+    <text class="s" x="20" y="148">matched to printed words</text>
+  </g>
+  <!-- 5 output -->
+  <g transform="translate(940 80)">
+    <rect class="hot pulse" width="220" height="160" rx="10"/>
+    <g transform="translate(20 20)">
+      <text class="m" x="0" y="12">"total": 5496.68,</text>
+      <text class="m" x="0" y="30" fill="#7c3420">"source": {"page": 1,</text>
+      <text class="m" x="0" y="48" fill="#7c3420" xml:space="preserve">  "bbox": [...]}</text>
+    </g>
+    <text class="k" x="20" y="98">05 OUTPUT</text>
+    <text class="h" x="20" y="126">JSON + citation</text>
+    <text class="s" x="20" y="148">one click to check</text>
+  </g>
+
+  <!-- Q&A branch -->
+  <path class="branch" d="M352 240V318H482"/>
+  <path d="M476 312l8 6-8 6" fill="none" stroke="#1c1915" stroke-width="1.5"/>
+  <g transform="translate(486 290)">
+    <rect class="tag" width="674" height="56" rx="28"/>
+    <text class="k" x="26" y="25">ASK</text>
+    <text class="s" x="26" y="44" style="font-size:15px;fill:#1c1915">"When is payment due?" → retrieve passages (bge-m3 or BM25) → answer with [passage] citations</text>
+  </g>
+  <text class="s" x="40" y="392">Backend: your OpenAI-compatible API, or open models from Hugging Face (Qwen2.5, bge-m3, Florence-2). Same pipeline either way.</text>
+</svg>

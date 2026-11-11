@@ -1,0 +1,912 @@
+[
+  {
+    "file": "contract-master-services.pdf",
+    "schema": "contract",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "contract_title": {
+        "value": "Master Services Agreement",
+        "raw": "Master Services Agreement",
+        "source": {
+          "page": 1,
+          "bbox": [
+            81.29,
+            101.78,
+            197.93,
+            112.28
+          ],
+          "text": "Master Services Agreement"
+        }
+      },
+      "party_a": {
+        "value": "Northwind Parts Pte. Ltd.",
+        "raw": "Northwind Parts Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            423.92,
+            101.78,
+            531.54,
+            112.28
+          ],
+          "text": "Northwind Parts Pte. Ltd."
+        }
+      },
+      "party_b": {
+        "value": "Example Logistics Pte. Ltd.",
+        "raw": "Example Logistics Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            143.7,
+            115.78,
+            260.66,
+            126.28
+          ],
+          "text": "Example Logistics Pte. Ltd."
+        }
+      },
+      "effective_date": {
+        "value": "2026-07-01",
+        "raw": "2026-07-01",
+        "source": {
+          "page": 1,
+          "bbox": [
+            248.67,
+            101.78,
+            297.68,
+            112.28
+          ],
+          "text": "1 July 2026"
+        }
+      },
+      "term_months": {
+        "value": 24,
+        "raw": "24",
+        "source": {
+          "page": 1,
+          "bbox": [
+            371.14,
+            201.78,
+            381.64,
+            212.28
+          ],
+          "text": "24"
+        }
+      },
+      "notice_period_days": {
+        "value": 60,
+        "raw": "60",
+        "source": {
+          "page": 1,
+          "bbox": [
+            433.29,
+            387.78,
+            450.78,
+            398.28
+          ],
+          "text": "(60)"
+        }
+      },
+      "payment_terms_days": {
+        "value": 30,
+        "raw": "30",
+        "source": {
+          "page": 1,
+          "bbox": [
+            292.73,
+            251.78,
+            303.23,
+            262.28
+          ],
+          "text": "30"
+        }
+      },
+      "governing_law": {
+        "value": "Singapore",
+        "raw": "Singapore",
+        "source": {
+          "page": 1,
+          "bbox": [
+            243.72,
+            437.78,
+            288.92,
+            448.28
+          ],
+          "text": "Singapore."
+        }
+      }
+    }
+  },
+  {
+    "file": "contract-supply.pdf",
+    "schema": "contract",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "contract_title": {
+        "value": "Supply Agreement",
+        "raw": "Supply Agreement",
+        "source": {
+          "page": 1,
+          "bbox": [
+            81.29,
+            101.78,
+            160.33,
+            112.28
+          ],
+          "text": "Supply Agreement"
+        }
+      },
+      "party_a": {
+        "value": "Sample Robotics Ltd.",
+        "raw": "Sample Robotics Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            400.62,
+            101.78,
+            491.92,
+            112.28
+          ],
+          "text": "Sample Robotics Ltd."
+        }
+      },
+      "party_b": {
+        "value": "Demo Freight GmbH",
+        "raw": "Demo Freight GmbH",
+        "source": {
+          "page": 1,
+          "bbox": [
+            109.57,
+            115.78,
+            199.4,
+            126.28
+          ],
+          "text": "Demo Freight GmbH"
+        }
+      },
+      "effective_date": {
+        "value": "2026-09-15",
+        "raw": "2026-09-15",
+        "source": {
+          "page": 1,
+          "bbox": [
+            247.81,
+            101.78,
+            329.47,
+            112.28
+          ],
+          "text": "15 September 2026"
+        }
+      },
+      "term_months": {
+        "value": 12,
+        "raw": "12",
+        "source": {
+          "page": 1,
+          "bbox": [
+            265.29,
+            187.78,
+            282.78,
+            198.28
+          ],
+          "text": "(12)"
+        }
+      },
+      "notice_period_days": {
+        "value": 90,
+        "raw": "90",
+        "source": {
+          "page": 1,
+          "bbox": [
+            289.52,
+            309.78,
+            307.01,
+            320.28
+          ],
+          "text": "(90)"
+        }
+      },
+      "payment_terms_days": {
+        "value": 45,
+        "raw": "45",
+        "source": {
+          "page": 1,
+          "bbox": [
+            393.0,
+            237.78,
+            403.5,
+            248.28
+          ],
+          "text": "45"
+        }
+      },
+      "governing_law": {
+        "value": "England and Wales",
+        "raw": "England and Wales",
+        "source": {
+          "page": 1,
+          "bbox": [
+            412.25,
+            359.78,
+            496.53,
+            370.28
+          ],
+          "text": "England and Wales."
+        }
+      }
+    }
+  },
+  {
+    "file": "invoice-acme-scanned.pdf",
+    "schema": "invoice",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "invoice_number": {
+        "value": "AES-5120",
+        "raw": "AES-5120",
+        "source": {
+          "page": 1,
+          "bbox": [
+            175.0,
+            149.0,
+            232.5,
+            162.5
+          ],
+          "text": "AES-5120"
+        }
+      },
+      "invoice_date": {
+        "value": "2026-06-08",
+        "raw": "2026-06-08",
+        "source": {
+          "page": 1,
+          "bbox": [
+            175.0,
+            169.5,
+            244.0,
+            182.0
+          ],
+          "text": "8 June 2026"
+        }
+      },
+      "due_date": {
+        "value": "2026-07-08",
+        "raw": "2026-07-08",
+        "source": {
+          "page": 1,
+          "bbox": [
+            176.5,
+            190.5,
+            239.0,
+            203.0
+          ],
+          "text": "8 July 2026"
+        }
+      },
+      "seller_name": {
+        "value": "Acme Example Services Pte. Ltd.",
+        "raw": "Acme Example Services Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            54.0,
+            61.5,
+            370.5,
+            86.0
+          ],
+          "text": "Acme Example Services Pte. Ltd."
+        }
+      },
+      "buyer_name": {
+        "value": "Northwind Parts Pte., Ltd.",
+        "raw": "Northwind Parts Pte., Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            176.5,
+            209.0,
+            311.0,
+            222.5
+          ],
+          "text": "Northwind Parts Pte ., Ltd."
+        }
+      },
+      "currency": {
+        "value": "SGD",
+        "raw": "SGD",
+        "source": {
+          "page": 1,
+          "bbox": [
+            498.29,
+            247.5,
+            533.5,
+            261.0
+          ],
+          "text": "(SGD)"
+        }
+      },
+      "subtotal": {
+        "value": 5219.37,
+        "raw": "5219.37",
+        "source": {
+          "page": 1,
+          "bbox": [
+            486.0,
+            353.0,
+            535.0,
+            365.5
+          ],
+          "text": "5,219.37"
+        }
+      },
+      "tax": {
+        "value": 469.74,
+        "raw": "469.74",
+        "source": {
+          "page": 1,
+          "bbox": [
+            496.5,
+            375.0,
+            536.0,
+            386.5
+          ],
+          "text": "469.74"
+        }
+      },
+      "total": {
+        "value": 5689.11,
+        "raw": "5689.11",
+        "source": {
+          "page": 1,
+          "bbox": [
+            486.0,
+            397.0,
+            535.0,
+            409.5
+          ],
+          "text": "5,689.11"
+        }
+      }
+    }
+  },
+  {
+    "file": "invoice-demo-freight-compact.pdf",
+    "schema": "invoice",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "invoice_number": {
+        "value": "DF-88213",
+        "raw": "DF-88213",
+        "source": {
+          "page": 1,
+          "bbox": [
+            504.17,
+            122.17,
+            545.28,
+            132.17
+          ],
+          "text": "DF-88213"
+        }
+      },
+      "invoice_date": {
+        "value": "2026-02-03",
+        "raw": "03.02.2026",
+        "source": {
+          "page": 1,
+          "bbox": [
+            500.28,
+            137.17,
+            545.28,
+            147.17
+          ],
+          "text": "03.02.2026"
+        }
+      },
+      "due_date": {
+        "value": "2026-03-05",
+        "raw": "05.03.2026",
+        "source": {
+          "page": 1,
+          "bbox": [
+            500.28,
+            152.17,
+            545.28,
+            162.17
+          ],
+          "text": "05.03.2026"
+        }
+      },
+      "seller_name": {
+        "value": "Demo Freight GmbH",
+        "raw": "Demo Freight GmbH",
+        "source": {
+          "page": 1,
+          "bbox": [
+            50.0,
+            47.47,
+            195.76,
+            63.47
+          ],
+          "text": "Demo Freight GmbH"
+        }
+      },
+      "buyer_name": {
+        "value": "Northwind Parts Pte. Ltd.",
+        "raw": "Northwind Parts Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            50.0,
+            136.17,
+            152.5,
+            146.17
+          ],
+          "text": "Northwind Parts Pte. Ltd."
+        }
+      },
+      "currency": {
+        "value": "EUR",
+        "raw": "EUR",
+        "source": {
+          "page": 1,
+          "bbox": [
+            525.28,
+            167.17,
+            545.28,
+            177.17
+          ],
+          "text": "EUR"
+        }
+      },
+      "subtotal": {
+        "value": 3151.06,
+        "raw": "3151.06",
+        "source": {
+          "page": 1,
+          "bbox": [
+            487.78,
+            296.17,
+            522.78,
+            306.17
+          ],
+          "text": "3,151.06"
+        }
+      },
+      "tax": {
+        "value": 598.7,
+        "raw": "598.7",
+        "source": {
+          "page": 1,
+          "bbox": [
+            495.28,
+            311.17,
+            522.78,
+            321.17
+          ],
+          "text": "598.70"
+        }
+      },
+      "total": {
+        "value": 3749.76,
+        "raw": "3749.76",
+        "source": {
+          "page": 1,
+          "bbox": [
+            480.8,
+            328.39,
+            519.3,
+            339.39
+          ],
+          "text": "3,749.76"
+        }
+      }
+    }
+  },
+  {
+    "file": "invoice-example-logistics-banner.pdf",
+    "schema": "invoice",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "invoice_number": {
+        "value": "EL/INV/7731",
+        "raw": "EL/INV/7731",
+        "source": {
+          "page": 1,
+          "bbox": [
+            515.3,
+            52.07,
+            572.0,
+            62.07
+          ],
+          "text": "EL/INV/7731"
+        }
+      },
+      "invoice_date": {
+        "value": "2026-05-02",
+        "raw": "2026-05-02",
+        "source": {
+          "page": 1,
+          "bbox": [
+            75.02,
+            172.07,
+            126.16,
+            182.07
+          ],
+          "text": "2026-05-02"
+        }
+      },
+      "due_date": {
+        "value": "2026-06-01",
+        "raw": "2026-06-01",
+        "source": {
+          "page": 1,
+          "bbox": [
+            264.48,
+            172.07,
+            315.62,
+            182.07
+          ],
+          "text": "2026-06-01"
+        }
+      },
+      "seller_name": {
+        "value": "Example Logistics Inc.",
+        "raw": "Example Logistics Inc.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            40.0,
+            127.07,
+            139.48,
+            137.07
+          ],
+          "text": "Example Logistics Inc."
+        }
+      },
+      "buyer_name": {
+        "value": "Sample Robotics Ltd.",
+        "raw": "Sample Robotics Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            306.0,
+            127.07,
+            401.04,
+            137.07
+          ],
+          "text": "Sample Robotics Ltd."
+        }
+      },
+      "currency": {
+        "value": "USD",
+        "raw": "USD",
+        "source": {
+          "page": 1,
+          "bbox": [
+            426.12,
+            172.07,
+            447.23,
+            182.07
+          ],
+          "text": "USD"
+        }
+      },
+      "subtotal": {
+        "value": 12594.58,
+        "raw": "12594.58",
+        "source": {
+          "page": 1,
+          "bbox": [
+            517.52,
+            332.07,
+            562.0,
+            342.07
+          ],
+          "text": "12,594.58"
+        }
+      },
+      "tax": {
+        "value": 881.62,
+        "raw": "881.62",
+        "source": {
+          "page": 1,
+          "bbox": [
+            531.42,
+            350.07,
+            562.0,
+            360.07
+          ],
+          "text": "881.62"
+        }
+      },
+      "total": {
+        "value": 13476.2,
+        "raw": "13476.2",
+        "source": {
+          "page": 1,
+          "bbox": [
+            508.62,
+            374.48,
+            562.0,
+            386.48
+          ],
+          "text": "13,476.20"
+        }
+      }
+    }
+  },
+  {
+    "file": "invoice-northwind-classic.pdf",
+    "schema": "invoice",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "invoice_number": {
+        "value": "NWP-2026-0412",
+        "raw": "NWP-2026-0412",
+        "source": {
+          "page": 1,
+          "bbox": [
+            470.81,
+            84.07,
+            545.28,
+            94.07
+          ],
+          "text": "NWP-2026-0412"
+        }
+      },
+      "invoice_date": {
+        "value": "2026-03-14",
+        "raw": "2026-03-14",
+        "source": {
+          "page": 1,
+          "bbox": [
+            478.58,
+            98.07,
+            545.28,
+            108.07
+          ],
+          "text": "14 March 2026"
+        }
+      },
+      "due_date": {
+        "value": "2026-04-13",
+        "raw": "2026-04-13",
+        "source": {
+          "page": 1,
+          "bbox": [
+            486.36,
+            112.07,
+            545.28,
+            122.07
+          ],
+          "text": "13 April 2026"
+        }
+      },
+      "seller_name": {
+        "value": "Northwind Parts Pte. Ltd.",
+        "raw": "Northwind Parts Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            50.0,
+            55.73,
+            265.03,
+            73.73
+          ],
+          "text": "Northwind Parts Pte. Ltd."
+        }
+      },
+      "buyer_name": {
+        "value": "Example Logistics Pte. Ltd.",
+        "raw": "Example Logistics Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            50.0,
+            156.07,
+            170.61,
+            166.07
+          ],
+          "text": "Example Logistics Pte. Ltd."
+        }
+      },
+      "currency": {
+        "value": "SGD",
+        "raw": "SGD",
+        "source": {
+          "page": 1,
+          "bbox": [
+            490.25,
+            362.07,
+            511.92,
+            372.07
+          ],
+          "text": "SGD"
+        }
+      },
+      "subtotal": {
+        "value": 5042.83,
+        "raw": "5042.83",
+        "source": {
+          "page": 1,
+          "bbox": [
+            506.36,
+            344.07,
+            545.28,
+            354.07
+          ],
+          "text": "5,042.83"
+        }
+      },
+      "tax": {
+        "value": 453.85,
+        "raw": "453.85",
+        "source": {
+          "page": 1,
+          "bbox": [
+            514.7,
+            362.07,
+            545.28,
+            372.07
+          ],
+          "text": "453.85"
+        }
+      },
+      "total": {
+        "value": 5496.68,
+        "raw": "5496.68",
+        "source": {
+          "page": 1,
+          "bbox": [
+            502.46,
+            383.28,
+            545.28,
+            394.28
+          ],
+          "text": "5,496.68"
+        }
+      }
+    }
+  },
+  {
+    "file": "invoice-placeholder-two-page.pdf",
+    "schema": "invoice",
+    "backend": "hf",
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "fields": {
+      "invoice_number": {
+        "value": "PS-INV-30027",
+        "raw": "PS-INV-30027",
+        "source": {
+          "page": 1,
+          "bbox": [
+            487.25,
+            64.86,
+            545.28,
+            73.86
+          ],
+          "text": "PS-INV-30027"
+        }
+      },
+      "invoice_date": {
+        "value": "2026-01-20",
+        "raw": "20/01/2026",
+        "source": {
+          "page": 1,
+          "bbox": [
+            113.92,
+            106.07,
+            163.96,
+            116.07
+          ],
+          "text": "20/01/2026"
+        }
+      },
+      "due_date": {
+        "value": "2026-02-19",
+        "raw": "19/02/2026",
+        "source": {
+          "page": 1,
+          "bbox": [
+            138.37,
+            120.07,
+            188.41,
+            130.07
+          ],
+          "text": "19/02/2026"
+        }
+      },
+      "seller_name": {
+        "value": "Placeholder Supplies Pte. Ltd.",
+        "raw": "Placeholder Supplies Pte. Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            50.0,
+            48.9,
+            250.73,
+            62.9
+          ],
+          "text": "Placeholder Supplies Pte. Ltd."
+        }
+      },
+      "buyer_name": {
+        "value": "Sample Robotics Ltd.",
+        "raw": "Sample Robotics Ltd.",
+        "source": {
+          "page": 1,
+          "bbox": [
+            98.36,
+            92.07,
+            193.4,
+            102.07
+          ],
+          "text": "Sample Robotics Ltd."
+        }
+      },
+      "currency": {
+        "value": "SGD",
+        "raw": "SGD",
+        "source": {
+          "page": 1,
+          "bbox": [
+            519.78,
+            152.86,
+            545.28,
+            161.86
+          ],
+          "text": "(SGD)"
+        }
+      },
+      "subtotal": {
+        "value": 6204.22,
+        "raw": "6204.22",
+        "source": {
+          "page": 2,
+          "bbox": [
+            506.36,
+            268.07,
+            545.28,
+            278.07
+          ],
+          "text": "6,204.22"
+        }
+      },
+      "tax": {
+        "value": 558.38,
+        "raw": "558.38",
+        "source": {
+          "page": 2,
+          "bbox": [
+            514.7,
+            284.07,
+            545.28,
+            294.07
+          ],
+          "text": "558.38"
+        }
+      },
+      "total": {
+        "value": 6762.6,
+        "raw": "6762.60",
+        "source": {
+          "page": 2,
+          "bbox": [
+            502.46,
+            303.28,
+            545.28,
+            314.28
+          ],
+          "text": "6,762.60"
+        }
+      }
+    }
+  }
+]
