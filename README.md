@@ -34,8 +34,8 @@ flowchart TB
   Q --> O
   subgraph BK["Backend · pick one"]
     direction LR
-    A["<b>(a) Your API key</b><br/>OpenAI-compatible<br/>LLM + embeddings"]:::rust
-    H["<b>(b) Hugging Face</b><br/>Qwen2.5-7B-Instruct<br/>bge-m3 · Florence-2"]:::rust
+    BKA["<b>(a) Your API key</b><br/>OpenAI-compatible<br/>LLM + embeddings"]:::rust
+    BKH["<b>(b) Hugging Face</b><br/>Qwen2.5-7B-Instruct<br/>bge-m3 · Florence-2"]:::rust
   end
   BK -.-> X
   BK -.-> Q
