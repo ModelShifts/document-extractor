@@ -1,0 +1,27 @@
+name: contract
+description: A commercial agreement between two companies.
+fields:
+  contract_title:
+    type: string
+    description: The title of the agreement as printed at the top
+  party_a:
+    type: string
+    description: The first company named as a party to the agreement
+  party_b:
+    type: string
+    description: The second company named as a party to the agreement
+  effective_date:
+    type: date
+    description: The date the agreement is made or takes effect
+  term_months:
+    type: integer
+    description: Length of the initial term in months
+  notice_period_days:
+    type: integer
+    description: Days of written notice needed to terminate the agreement
+  payment_terms_days:
+    type: integer
+    description: Number of days within which invoices must be paid
+  governing_law:
+    type: string
+    description: The jurisdiction whose laws govern the agreement

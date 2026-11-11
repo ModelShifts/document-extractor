@@ -1,0 +1,30 @@
+name: invoice
+description: A commercial invoice from a seller to a buyer.
+fields:
+  invoice_number:
+    type: string
+    description: The invoice number or reference printed on the invoice
+  invoice_date:
+    type: date
+    description: The date the invoice was issued
+  due_date:
+    type: date
+    description: The date payment is due
+  seller_name:
+    type: string
+    description: The company that issued the invoice (the supplier or vendor)
+  buyer_name:
+    type: string
+    description: The company the invoice is billed to (the customer)
+  currency:
+    type: string
+    description: Three-letter currency code, for example SGD, USD or EUR
+  subtotal:
+    type: number
+    description: Total before tax (net amount, sub-total)
+  tax:
+    type: number
+    description: Tax amount (GST, VAT or sales tax)
+  total:
+    type: number
+    description: Final amount due including tax (total due, gross total, amount due)
