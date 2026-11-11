@@ -1,0 +1,15 @@
+{
+  "file": "invoice-example-logistics-banner.pdf",
+  "schema": "invoice",
+  "fields": {
+    "invoice_number": "EL/INV/7731",
+    "invoice_date": "2026-05-02",
+    "due_date": "2026-06-01",
+    "seller_name": "Example Logistics Inc.",
+    "buyer_name": "Sample Robotics Ltd.",
+    "currency": "USD",
+    "subtotal": 12594.58,
+    "tax": 881.62,
+    "total": 13476.2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "file": "contract-supply.pdf",
+  "schema": "contract",
+  "fields": {
+    "contract_title": "Supply Agreement",
+    "party_a": "Sample Robotics Ltd.",
+    "party_b": "Demo Freight GmbH",
+    "effective_date": "2026-09-15",
+    "term_months": 12,
+    "notice_period_days": 90,
+    "payment_terms_days": 45,
+    "governing_law": "England and Wales"
+  }
+}

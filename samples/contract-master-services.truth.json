@@ -1,0 +1,14 @@
+{
+  "file": "contract-master-services.pdf",
+  "schema": "contract",
+  "fields": {
+    "contract_title": "Master Services Agreement",
+    "party_a": "Northwind Parts Pte. Ltd.",
+    "party_b": "Example Logistics Pte. Ltd.",
+    "effective_date": "2026-07-01",
+    "term_months": 24,
+    "notice_period_days": 60,
+    "payment_terms_days": 30,
+    "governing_law": "Singapore"
+  }
+}

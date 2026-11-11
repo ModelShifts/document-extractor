@@ -1,0 +1,15 @@
+{
+  "file": "invoice-placeholder-two-page.pdf",
+  "schema": "invoice",
+  "fields": {
+    "invoice_number": "PS-INV-30027",
+    "invoice_date": "2026-01-20",
+    "due_date": "2026-02-19",
+    "seller_name": "Placeholder Supplies Pte. Ltd.",
+    "buyer_name": "Sample Robotics Ltd.",
+    "currency": "SGD",
+    "subtotal": 6204.22,
+    "tax": 558.38,
+    "total": 6762.6
+  }
+}

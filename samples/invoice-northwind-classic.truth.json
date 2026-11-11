@@ -1,0 +1,15 @@
+{
+  "file": "invoice-northwind-classic.pdf",
+  "schema": "invoice",
+  "fields": {
+    "invoice_number": "NWP-2026-0412",
+    "invoice_date": "2026-03-14",
+    "due_date": "2026-04-13",
+    "seller_name": "Northwind Parts Pte. Ltd.",
+    "buyer_name": "Example Logistics Pte. Ltd.",
+    "currency": "SGD",
+    "subtotal": 5042.83,
+    "tax": 453.85,
+    "total": 5496.68
+  }
+}

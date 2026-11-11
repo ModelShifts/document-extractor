@@ -1,0 +1,15 @@
+{
+  "file": "invoice-acme-scanned.pdf",
+  "schema": "invoice",
+  "fields": {
+    "invoice_number": "AES-5120",
+    "invoice_date": "2026-06-08",
+    "due_date": "2026-07-08",
+    "seller_name": "Acme Example Services Pte. Ltd.",
+    "buyer_name": "Northwind Parts Pte. Ltd.",
+    "currency": "SGD",
+    "subtotal": 5219.37,
+    "tax": 469.74,
+    "total": 5689.11
+  }
+}
