@@ -30,6 +30,8 @@ def test_ask_not_found_has_no_citation(samples):
     doc = load_pdf(samples / "contract-supply.pdf")
     answer = ask(doc, "What colour is the logo?", FakeLLM("Not found in the document."), BM25Retriever())
     assert answer.citations == []
+    stray = ask(doc, "What colour is the logo?", FakeLLM("Not found in the document. [2]"), BM25Retriever())
+    assert stray.answer == "Not found in the document." and stray.citations == []
 
 
 def _patch_llm(monkeypatch):
@@ -88,3 +90,13 @@ def test_cli_bad_backend(monkeypatch, capsys, samples):
     monkeypatch.setenv("MS_BACKEND", "nope")
     assert cli.main(["extract", str(samples / "contract-supply.pdf"), "--schema", "contract"]) == 2
     assert "MS_BACKEND" in capsys.readouterr().err
+
+
+def test_wrong_citation_number_is_repaired(samples):
+    doc = load_pdf(samples / "contract-master-services.pdf")
+    retriever = BM25Retriever()
+    passages = retriever.search("When does the notice period start?", chunk(doc), 4)
+    wrong = next(i for i, p in enumerate(passages, 1) if "received" not in p.text)
+    llm = FakeLLM(f"The notice period starts on the day the notice is received [{wrong}].")
+    answer = ask(doc, "When does the notice period start?", llm, retriever)
+    assert "received" in answer.citations[0].text

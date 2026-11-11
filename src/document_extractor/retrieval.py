@@ -36,8 +36,15 @@ class Passage:
                 round(max(w.bbox[2] for w in ws), 2), round(max(w.bbox[3] for w in ws), 2))
 
 
-def chunk(doc: Document, max_chars: int = 420) -> list[Passage]:
-    """Paragraph-like passages: lines are merged until a large vertical gap or ``max_chars``."""
+HEADING = re.compile(r"^(\d+(\.\d+)*\.?|[A-Z][A-Z ]{3,})\s+[A-Z]")
+
+
+def chunk(doc: Document, max_chars: int = 600) -> list[Passage]:
+    """Paragraph-like passages.
+
+    A new passage starts at a vertical gap larger than a line height, at a numbered
+    or upper-case heading (``7. Governing Law``), or when ``max_chars`` is reached.
+    """
     passages: list[Passage] = []
     for page in doc.pages:
         lines = page_lines(page)
@@ -53,7 +60,8 @@ def chunk(doc: Document, max_chars: int = 420) -> list[Passage]:
             text = line_text(ln)
             gap = None if prev_bottom is None else top - prev_bottom
             too_long = sum(len(t) for t in cur_text) + len(text) > max_chars
-            if cur_words and ((gap is not None and gap > 1.2 * h) or too_long):
+            heading = bool(HEADING.match(text))
+            if cur_words and ((gap is not None and gap > 0.9 * h) or too_long or heading):
                 passages.append(Passage(page.number, "\n".join(cur_text), cur_words))
                 cur_words, cur_text = [], []
             cur_words = cur_words + ln
@@ -124,8 +132,16 @@ class APIEmbeddingRetriever(_DenseRetriever):
         self.model = model
 
     def embed(self, texts: list[str]) -> list[list[float]]:
+        import numpy as np
+
         response = self.client.embeddings.create(model=self.model, input=texts)
-        return [d.embedding for d in response.data]
+        out = []
+        for d in response.data:
+            vec = np.asarray(d.embedding, dtype="float32")
+            if vec.ndim == 2:  # some local servers return one vector per token: mean-pool them
+                vec = vec.mean(axis=0)
+            out.append(vec.tolist())
+        return out
 
 
 _RETRIEVERS: dict[tuple, Retriever] = {}
