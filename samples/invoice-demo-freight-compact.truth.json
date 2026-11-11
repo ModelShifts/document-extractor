@@ -1,0 +1,15 @@
+{
+  "file": "invoice-demo-freight-compact.pdf",
+  "schema": "invoice",
+  "fields": {
+    "invoice_number": "DF-88213",
+    "invoice_date": "2026-02-03",
+    "due_date": "2026-03-05",
+    "seller_name": "Demo Freight GmbH",
+    "buyer_name": "Northwind Parts Pte. Ltd.",
+    "currency": "EUR",
+    "subtotal": 3151.06,
+    "tax": 598.7,
+    "total": 3749.76
+  }
+}

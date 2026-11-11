@@ -4,17 +4,29 @@ build-backend = "hatchling.build"
 
 [project]
 name = "document-extractor"
-version = "0.0.1"
+version = "0.1.0"
 description = "Turn PDF invoices and contracts into structured fields, each linked to its source."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [{ name = "Modelshifts", email = "info@modelshifts.com" }]
-dependencies = ["pydantic>=2", "httpx>=0.27"]
+dependencies = [
+  "pydantic>=2",
+  "pdfplumber>=0.11",
+  "pypdfium2>=4.30",
+  "pillow>=10",
+  "pyyaml>=6",
+  "rank-bm25>=0.2.2",
+  "python-dotenv>=1",
+  "numpy>=1.26",
+]
 
 [project.optional-dependencies]
 api = ["openai>=1.40"]
-hf = ["transformers>=4.45", "sentence-transformers>=3", "torch>=2.3"]
+hf = ["transformers>=4.56", "sentence-transformers>=3", "torch>=2.3", "accelerate>=0.33"]
+demo = ["gradio>=5"]
+samples = ["reportlab>=4"]
+dev = ["pytest>=8", "reportlab>=4", "openai>=1.40"]
 
 [project.urls]
 Homepage = "https://modelshifts.com/work"
@@ -25,3 +37,9 @@ document-extractor = "document_extractor.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/document_extractor"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"schemas" = "document_extractor/schemas"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
