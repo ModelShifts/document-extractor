@@ -15,6 +15,8 @@
 
 ## Features
 
+Planned for v1. Progress is tracked in the Roadmap below.
+
 - **Field extraction to JSON**: define the fields you want (invoice number, totals, parties, dates) and get typed JSON back.
 - **Source citation per value**: every value carries the page and bounding box it came from, so it can be checked in one click.
 - **Q&A over the document (RAG)**: ask a question and get an answer grounded in cited passages.
