@@ -25,7 +25,7 @@
 
 Imagine a finance operations desk that closes the week by retyping 400 invoices. Each one is a PDF: a number, a due date, a total, two company names. Someone opens the file, finds those nine fields, and keys them into a spreadsheet. The work is careful and slow, and a transposed digit is easy to miss until a payment comes back.
 
-That is the shape of work this project is built for — a familiar job, not a claim about a particular team. The useful result is not a model that can “read PDFs.” It is a list of fields a person can audit, because every value still knows the place on the page it came from.
+The useful result is not a model that can “read PDFs.” It is a list of fields a person can audit, because every value still knows the place on the page it came from.
 
 ## How it works
 
