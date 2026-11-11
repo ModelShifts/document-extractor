@@ -30,21 +30,22 @@ def _content_tokens(text: str) -> set[str]:
     return {t for t in re.findall(r"[a-z0-9][a-z0-9,.\-]*[a-z0-9]|\d", text) if any(c.isdigit() for c in t) or len(t) > 3}
 
 
-def _repair_citations(reply: str, passages: list[Passage], cited: list[int]) -> list[int]:
+def _repair_citations(reply: str, passages: list[Passage], cited: list[int]) -> tuple[list[int], dict[int, int]]:
     """Small models sometimes cite the wrong number. If another retrieved passage shares at
     least two more content words with the answer than the cited one, cite that one instead."""
     words = _content_tokens(reply)
     if not words:
-        return cited
+        return cited, {}
     overlap = [len(words & _content_tokens(p.text)) for p in passages]
-    fixed = []
+    fixed, moved = [], {}
     for i in cited:
         best = max(range(len(passages)), key=lambda j: overlap[j])
         if overlap[best] >= overlap[i - 1] + 2:
+            moved[i] = best + 1
             i = best + 1
         if i not in fixed:
             fixed.append(i)
-    return fixed
+    return fixed, moved
 
 
 def ask(doc: Document, question: str, llm: LLM, retriever: Retriever, k: int = 4, backend: str = "") -> Answer:
@@ -59,7 +60,9 @@ def ask(doc: Document, question: str, llm: LLM, retriever: Retriever, k: int = 4
             cited.append(i)
     if not cited and passages and not reply.lower().startswith("not found"):
         cited = [1]  # model forgot to cite: point at the top-ranked passage
-    cited = _repair_citations(reply, passages, cited)
+    cited, moved = _repair_citations(reply, passages, cited)
+    if moved:  # keep the numbers in the answer text in step with the citations
+        reply = re.sub(r"\[(\d+)\]", lambda m: f"[{moved.get(int(m.group(1)), int(m.group(1)))}]", reply)
     if reply == "Not found in the document.":
         cited = []
     citations = [

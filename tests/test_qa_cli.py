@@ -100,3 +100,4 @@ def test_wrong_citation_number_is_repaired(samples):
     llm = FakeLLM(f"The notice period starts on the day the notice is received [{wrong}].")
     answer = ask(doc, "When does the notice period start?", llm, retriever)
     assert "received" in answer.citations[0].text
+    assert f"[{answer.citations[0].n}]" in answer.answer
