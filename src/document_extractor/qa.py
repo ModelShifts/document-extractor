@@ -12,7 +12,7 @@ SYSTEM = (
     "You answer questions about a business document using only the numbered passages you are given. "
     "Write the answer as one short sentence, then put the number of the passage you used in square "
     "brackets at the end. Example: The term is 24 months [2]. "
-    "If the passages do not contain the answer, reply exactly: Not found in the document."
+    "Only if none of the passages answers the question, reply: Not found in the document."
 )
 
 
