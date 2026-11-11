@@ -119,7 +119,8 @@ MS_MODEL=your-chat-model
 To try it without a paid key, run an open model behind a local OpenAI-compatible server, for example [llama-cpp-python](https://github.com/abetlen/llama-cpp-python):
 
 ```bash
-pip install "llama-cpp-python[server]" huggingface_hub
+pip install "llama-cpp-python[server]" huggingface_hub \
+  --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu   # prebuilt CPU wheels, no compiler needed
 hf download Qwen/Qwen2.5-1.5B-Instruct-GGUF qwen2.5-1.5b-instruct-q4_k_m.gguf --local-dir models
 python -m llama_cpp.server --model models/qwen2.5-1.5b-instruct-q4_k_m.gguf --n_ctx 8192 --port 8001
 # then: MS_API_BASE=http://127.0.0.1:8001/v1  MS_API_KEY=local  MS_MODEL=qwen2.5-1.5b-instruct-q4_k_m
@@ -143,7 +144,7 @@ python scripts/evaluate.py       # compare the configured backend with the groun
 ## Limitations
 
 - The samples are synthetic and have simple layouts. The project has not been measured on real-world documents.
-- On a CPU, extraction with the open models takes tens of seconds per document. The 7B default needs a GPU.
+- On a CPU, extraction with the open models takes tens of seconds per document, and loading Qwen, bge-m3 and Florence-2 together needs several GB of memory. The 7B default needs a GPU.
 - Florence-2 reads a scanned page in one pass, so small or dense text can be misread. On the API backend, OCR through `MS_VISION_MODEL` is implemented but has only been tested with a mocked model.
 - Source boxes come from matching the value against the page text. If a value is printed more than once, the copy closest to a matching label is used, which is not always the one the model read.
 - Numeric dates such as `03.02.2026` are read day-first.
