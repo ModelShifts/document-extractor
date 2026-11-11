@@ -59,7 +59,7 @@ def cmd_batch(args: argparse.Namespace) -> int:
     from .schema import load_schema
 
     settings = _settings()
-    files = sorted(Path(args.dir).glob("*.pdf"))
+    files = sorted(Path(args.dir).glob(args.glob))
     if not files:
         print(f"no PDF files in {args.dir}", file=sys.stderr)
         return 1
@@ -123,6 +123,7 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("dir")
     b.add_argument("--schema", required=True)
     b.add_argument("--out", required=True, help="results.csv or results.json")
+    b.add_argument("--glob", default="*.pdf", help="which files to read, e.g. 'invoice-*.pdf' (default: *.pdf)")
     b.set_defaults(func=cmd_batch)
 
     s = sub.add_parser("serve", help="start the local web demo (Gradio)")
