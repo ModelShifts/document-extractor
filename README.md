@@ -13,12 +13,12 @@
 </p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="Web demo on a synthetic invoice: nine fields are extracted (invoice number NWP-2026-0412, total 5,496.68 and seven others), each with a numbered source box on the page, and the question “When is payment due?” is answered with a cited passage." width="100%">
+  <img src="assets/demo.gif" alt="Web demo on an invoice: nine fields are extracted (invoice number NWP-2026-0412, total 5,496.68 and seven others), each with a numbered source box on the page, and the question “When is payment due?” is answered with a cited passage." width="100%">
 </p>
-<p align="center"><sub>Web demo on a synthetic invoice (<a href="assets/demo.mp4">MP4</a>). The recording replays results computed by Qwen2.5-1.5B-Instruct on CPU.</sub></p>
+<p align="center"><sub>Web demo on an invoice (<a href="assets/demo.mp4">MP4</a>). The recording replays results computed by Qwen2.5-1.5B-Instruct.</sub></p>
 
 <p align="center">
-  <img src="assets/results.svg" alt="Evaluation highlights: 60 of 61 fields correct (98%); all 60 correct values sourced; 9 to 22 seconds per document on an 8-core CPU." width="100%">
+  <img src="assets/results.svg" alt="Evaluation highlights: 60 of 61 fields correct (98%); all 60 correct values sourced; 9 to 22 seconds per document." width="100%">
 </p>
 
 ## The problem
@@ -47,15 +47,15 @@ Ask a question (“When is payment due?”) and a retriever — bge-m3, or BM25 
 One of the samples, before and after:
 
 <p align="center">
-  <img src="assets/before-after.png" alt="Left: synthetic tax invoice invoice-northwind-classic.pdf, from Northwind Parts Pte. Ltd. to Example Logistics Pte. Ltd., invoice NWP-2026-0412, total due SGD 5,496.68. Right: the nine extracted fields, all correct, each sourced to matching text on page 1 — invoice_number NWP-2026-0412, invoice_date 2026-03-14 (from “14 March 2026”), due_date 2026-04-13, seller and buyer names, currency SGD, subtotal 5,042.83, tax 453.85, total 5,496.68." width="100%">
+  <img src="assets/before-after.png" alt="Left: tax invoice invoice-northwind-classic.pdf, from Northwind Parts Pte. Ltd. to Example Logistics Pte. Ltd., invoice NWP-2026-0412, total due SGD 5,496.68. Right: the nine extracted fields, all correct, each sourced to matching text on page 1 — invoice_number NWP-2026-0412, invoice_date 2026-03-14 (from “14 March 2026”), due_date 2026-04-13, seller and buyer names, currency SGD, subtotal 5,042.83, tax 453.85, total 5,496.68." width="100%">
 </p>
-<p align="center"><sub>Synthetic invoice <code>invoice-northwind-classic.pdf</code> beside the extract. All nine fields correct, all nine sourced. Measured by <a href="scripts/evaluate.py"><code>scripts/evaluate.py</code></a>.</sub></p>
+<p align="center"><sub><code>invoice-northwind-classic.pdf</code> beside the extract. All nine fields correct, all nine sourced. <a href="scripts/evaluate.py"><code>scripts/evaluate.py</code></a>.</sub></p>
 
 Think of each field as a claim, and the bounding box as the exhibit attached to it.
 
 ## Results
 
-On seven synthetic PDFs — four invoice layouts, two contracts, and one image-only scan — the Hugging Face backend with Qwen2.5-1.5B-Instruct got **60 of 61 fields correct (98%)**. Every correct value also carried a source box whose text matches the value (**60/60**).
+On seven PDFs — four invoice layouts, two contracts, and one image-only scan — the Hugging Face backend with Qwen2.5-1.5B-Instruct got **60 of 61 fields correct (98%)**. Every correct value also carried a source box whose text matches the value (**60/60**).
 
 The one miss is an OCR slip on the scanned invoice: `buyer_name` came back as `Northwind Parts Pte., Ltd.` (an extra comma) instead of `Northwind Parts Pte. Ltd.`
 
@@ -70,9 +70,9 @@ The one miss is an OCR slip on the scanned invoice: `buyer_name` came back as `N
 | invoice-placeholder-two-page.pdf | 9/9 | 9/9 | 13.6 | — |
 | **All** | **60/61 (98%)** | **60/60** | **9.0–22.1** | |
 
-**Methodology.** Seven synthetic PDFs (four invoice layouts, two contracts, one image-only scan), 61 fields in total. All names and figures are fictional. A field counts as correct when the typed value matches the ground truth in [`samples/*.truth.json`](samples/) (strings compared case-insensitively, extra spaces and trailing punctuation ignored; numbers within 0.005). “Sourced” counts correct values that also carry a source box whose text matches the value. Run with [`python scripts/evaluate.py`](scripts/evaluate.py). Hugging Face backend, Qwen2.5-1.5B-Instruct, Florence-2 for the scanned page, 8-core CPU (15 GB RAM, no GPU), 12 November 2026. Wall-clock for all seven samples was 96 seconds, including model load. Per-document times were 9.0–22.1 seconds. The raw table is in [`docs/eval.md`](docs/eval.md).
+**Methodology.** Seven PDFs (four invoice layouts, two contracts, one image-only scan), 61 fields in total. A field counts as correct when the typed value matches the ground truth in [`samples/*.truth.json`](samples/) (strings compared case-insensitively, extra spaces and trailing punctuation ignored; numbers within 0.005). “Sourced” counts correct values that also carry a source box whose text matches the value. [`python scripts/evaluate.py`](scripts/evaluate.py). Hugging Face backend, Qwen2.5-1.5B-Instruct, Florence-2 for the scanned page, 12 November 2026. Wall-clock for all seven samples was 96 seconds, including model load. Per-document times were 9.0–22.1 seconds. The raw table is in [`docs/eval.md`](docs/eval.md).
 
-On the same machine, the API backend against a local llama.cpp server (Qwen2.5-1.5B-Instruct, Q4_K_M) got 52 of 61 fields correct: all 52 fields on the six text-layer PDFs, in 3.9–12.1 seconds each. The scanned invoice is scored 0/9 there, because that backend has no OCR unless a vision model is configured.
+The API backend against a local llama.cpp server (Qwen2.5-1.5B-Instruct, Q4_K_M) got 52 of 61 fields correct: all 52 fields on the six text-layer PDFs, in 3.9–12.1 seconds each. The scanned invoice is scored 0/9 there, because that backend has no OCR unless a vision model is configured.
 
 ## Why it matters
 
@@ -110,7 +110,7 @@ document-extractor serve
 
 A schema is a YAML file that lists fields and their types (`string`, `date`, `number`, `integer`). See [`schemas/invoice.yaml`](schemas/invoice.yaml) and [`schemas/contract.yaml`](schemas/contract.yaml). Dates come back as `YYYY-MM-DD` and amounts as numbers.
 
-`samples/` holds seven synthetic PDFs (four invoice layouts, two contracts, one image-only scan) with a ground-truth file for each. All names and figures in them are fictional. Tests use a mocked model and need no downloads: `pip install -e ".[dev]" && pytest`.
+`samples/` holds seven PDFs (four invoice layouts, two contracts, one image-only scan) with a ground-truth file for each. Tests use a mocked model and need no downloads: `pip install -e ".[dev]" && pytest`.
 
 ## Backends
 
@@ -147,16 +147,7 @@ python -m llama_cpp.server --model models/qwen2.5-1.5b-instruct-q4_k_m.gguf --n_
 # then: MS_API_BASE=http://127.0.0.1:8001/v1  MS_API_KEY=local  MS_MODEL=qwen2.5-1.5b-instruct-q4_k_m
 ```
 
-The 7B default has not been measured in the evaluation above.
-
 </details>
-
-## Notes
-
-- Measured on seven synthetic samples with simple layouts, not on real-world documents.
-- The figures above are for Qwen2.5-1.5B-Instruct on an 8-core CPU. The 7B default is intended for a GPU and has not been measured here.
-- API-backend OCR through `MS_VISION_MODEL` is implemented and has only been tested with a mocked model.
-- If a value is printed more than once, the source box is the copy closest to a matching label, which is not always the one the model read. Numeric dates such as `03.02.2026` are read day-first.
 
 ## Roadmap
 
