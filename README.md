@@ -1,81 +1,84 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="document-extractor" width="100%">
+  <img src="assets/banner.svg" alt="document-extractor by Modelshifts" width="100%">
 </p>
 
-<p align="center"><em>Turn PDF invoices and contracts into structured fields, each linked to its source.</em></p>
+<p align="center"><strong>A PDF goes in. Structured fields come out, each one pointing back to the words on the page.</strong></p>
 
 <p align="center">
+  <a href="https://github.com/ModelShifts/document-extractor/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/ModelShifts/document-extractor/ci.yml?branch=main&label=CI&style=flat-square&color=8a3a24"></a>
   <img alt="Status: v1" src="https://img.shields.io/badge/status-v1-8a3a24?style=flat-square">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-1c1a17?style=flat-square">
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-1c1a17?style=flat-square">
   <img alt="Backends: API or Hugging Face" src="https://img.shields.io/badge/backends-API%20%7C%20Hugging%20Face-1c1a17?style=flat-square">
 </p>
 
----
-
-## Features
-
-All five features below work in v1. See [Limitations](#limitations) for what they do not cover yet.
-
-- **Field extraction to JSON**: define the fields you want (invoice number, totals, parties, dates) and get typed JSON back.
-- **Source citation per value**: every value carries the page and bounding box it came from, so it can be checked in one click.
-- **Q&A over the document (RAG)**: ask a question and get an answer grounded in cited passages.
-- **Batch mode**: point it at a folder and get one CSV or JSON file per run.
-- **Web demo**: pick a sample or upload a PDF, see fields highlighted on the page.
+<p align="center">
+  <img src="assets/demo.gif" alt="Web demo on an invoice: nine fields are extracted (invoice number NWP-2026-0412, total 5,496.68 and seven others), each with a numbered source box on the page, and the question “When is payment due?” is answered with a cited passage." width="100%">
+</p>
+<p align="center"><sub>Web demo on an invoice (<a href="assets/demo.mp4">MP4</a>). The recording replays results computed by Qwen2.5-1.5B-Instruct.</sub></p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="Web demo: a synthetic invoice is selected, the extracted fields appear with their source boxes on the page, and a question is answered with a cited passage" width="100%">
+  <img src="assets/results.svg" alt="Evaluation highlights: 60 of 61 fields correct (98%); all 60 correct values sourced; 9 to 22 seconds per document." width="100%">
 </p>
-<p align="center"><sub>Web demo on a synthetic invoice (<a href="assets/demo.mp4">MP4</a>). Results in the recording were computed earlier by Qwen2.5-1.5B-Instruct on CPU and loaded from the demo's result cache.</sub></p>
 
-## Architecture
+## The problem
 
-```mermaid
-%%{init: {"theme":"base","flowchart":{"curve":"basis","wrappingWidth":260},"themeVariables":{"fontFamily":"Georgia, Times New Roman, serif","fontSize":"14px","primaryColor":"#f3efe6","primaryTextColor":"#1c1a17","primaryBorderColor":"#1c1a17","lineColor":"#1c1a17","clusterBkg":"#faf7f0","clusterBorder":"#8a3a24","titleColor":"#8a3a24","edgeLabelBackground":"#f3efe6"}}}%%
-flowchart TB
-  P["PDF / scan"]:::ink --> L["Layout and OCR<br/>pages, blocks, boxes"]:::ink
-  L --> X["Field extractor<br/>schema to JSON"]:::ink
-  L --> C["Chunk and embed"]:::ink
-  C --> Q["Q&A (RAG)<br/>retrieve, answer, cite"]:::ink
-  X --> G["Grounding<br/>match each value to page words"]:::ink
-  G --> O["JSON + source links<br/>page, box, snippet"]:::ink
-  Q --> O
-  subgraph BK["Backend · pick one"]
-    direction LR
-    BKA["<b>(a) Your API key</b><br/>OpenAI-compatible<br/>LLM + embeddings"]:::rust
-    BKH["<b>(b) Hugging Face</b><br/>Qwen2.5-7B-Instruct<br/>bge-m3 · Florence-2"]:::rust
-  end
-  BK -.-> X
-  BK -.-> Q
-  BK -.-> C
+Imagine a finance operations desk that closes the week by retyping 400 invoices. Each one is a PDF: a number, a due date, a total, two company names. Someone opens the file, finds those nine fields, and keys them into a spreadsheet. The work is careful and slow, and a transposed digit is easy to miss until a payment comes back.
 
-  classDef cl fill:#faf7f0,stroke:#8a3a24,stroke-dasharray:4 3,color:#8a3a24;
-  classDef ink fill:#f3efe6,stroke:#1c1a17,color:#1c1a17,stroke-width:1px;
-  classDef rust fill:#f3efe6,stroke:#8a3a24,color:#8a3a24,stroke-width:1.5px;
-```
+The useful result is not a model that can “read PDFs.” It is a list of fields a person can audit, because every value still knows the place on the page it came from.
 
-### Two interchangeable backends
+## How it works
 
-Pick one with `MS_BACKEND` in `.env`. The rest of the pipeline does not change.
+The pipeline is five steps, and a sixth if you ask a question.
 
-| | (a) Bring your own API key | (b) Open-source on Hugging Face |
-|---|---|---|
-| **What** | Any OpenAI-compatible endpoint | Open models, run locally with `transformers` |
-| **Set** | `MS_BACKEND=api`, `MS_API_BASE`, `MS_API_KEY`, `MS_MODEL` | `MS_BACKEND=hf`, optionally `MS_HF_MODEL` |
-| **Scanned pages** | `MS_VISION_MODEL` (a vision model on the same endpoint) | Florence-2 |
-| **Q&A retrieval** | `MS_EMBED_MODEL` if set, otherwise BM25 | bge-m3 |
-| **Good for** | Fastest start, strongest hosted models | Data stays on your machines, no per-call cost |
+1. A PDF or a scan comes in.
+2. The page is read into words with coordinates. Scanned pages go through Florence-2.
+3. A YAML schema lists the fields you want — invoice number, totals, parties, dates. No extraction code to write.
+4. Each returned value is matched back to the printed words on the page.
+5. You get JSON, and every value carries its page, bounding box and source text.
 
-**Default open-source models**
+Ask a question (“When is payment due?”) and a retriever — bge-m3, or BM25 — picks passages; the model answers with citations. Point it at a folder and it writes one CSV or JSON for the run.
 
-| Model | Used for | License |
-|---|---|---|
-| [`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) | field extraction and answers | Apache-2.0 |
-| [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3) | embeddings for retrieval | MIT |
-| [`florence-community/Florence-2-large`](https://huggingface.co/florence-community/Florence-2-large) | OCR for scanned pages (`transformers`-native copy of [`microsoft/Florence-2-large`](https://huggingface.co/microsoft/Florence-2-large)) | MIT |
+<p align="center">
+  <img src="assets/pipeline.svg" alt="Pipeline: a PDF or scan is read into words with page boxes; a YAML schema drives field extraction; each value is grounded back to the printed words, producing JSON with page, bounding box and source text. A parallel path answers questions from retrieved passages with citations. The same pipeline runs on an OpenAI-compatible API or on open models from Hugging Face." width="100%">
+</p>
+<p align="center"><sub>The same five steps, whether the backend is your API or open models on your own machine.</sub></p>
 
-On a machine without a GPU, set `MS_HF_MODEL=Qwen/Qwen2.5-1.5B-Instruct`. The 7B model needs a GPU or a lot of memory.
-`MS_RETRIEVER=bm25` skips the bge-m3 download and uses keyword retrieval instead.
+One of the samples, before and after:
+
+<p align="center">
+  <img src="assets/before-after.png" alt="Left: tax invoice invoice-northwind-classic.pdf, from Northwind Parts Pte. Ltd. to Example Logistics Pte. Ltd., invoice NWP-2026-0412, total due SGD 5,496.68. Right: the nine extracted fields, all correct, each sourced to matching text on page 1 — invoice_number NWP-2026-0412, invoice_date 2026-03-14 (from “14 March 2026”), due_date 2026-04-13, seller and buyer names, currency SGD, subtotal 5,042.83, tax 453.85, total 5,496.68." width="100%">
+</p>
+<p align="center"><sub><code>invoice-northwind-classic.pdf</code> beside the extract. All nine fields correct, all nine sourced. <a href="scripts/evaluate.py"><code>scripts/evaluate.py</code></a>.</sub></p>
+
+Think of each field as a claim, and the bounding box as the exhibit attached to it.
+
+## Results
+
+On seven PDFs — four invoice layouts, two contracts, and one image-only scan — the Hugging Face backend with Qwen2.5-1.5B-Instruct got **60 of 61 fields correct (98%)**. Every correct value also carried a source box whose text matches the value (**60/60**).
+
+The one miss is an OCR slip on the scanned invoice: `buyer_name` came back as `Northwind Parts Pte., Ltd.` (an extra comma) instead of `Northwind Parts Pte. Ltd.`
+
+| Sample | Correct | Sourced | Time (s) | Notes |
+|---|---|---|---|---|
+| contract-master-services.pdf | 8/8 | 8/8 | 18.7 | — |
+| contract-supply.pdf | 8/8 | 8/8 | 9.0 | — |
+| invoice-acme-scanned.pdf | 8/9 | 8/8 | 22.1 | `buyer_name`: extra OCR comma |
+| invoice-demo-freight-compact.pdf | 9/9 | 9/9 | 10.5 | — |
+| invoice-example-logistics-banner.pdf | 9/9 | 9/9 | 9.7 | — |
+| invoice-northwind-classic.pdf | 9/9 | 9/9 | 10.9 | — |
+| invoice-placeholder-two-page.pdf | 9/9 | 9/9 | 13.6 | — |
+| **All** | **60/61 (98%)** | **60/60** | **9.0–22.1** | |
+
+**Methodology.** Seven PDFs (four invoice layouts, two contracts, one image-only scan), 61 fields in total. A field counts as correct when the typed value matches the ground truth in [`samples/*.truth.json`](samples/) (strings compared case-insensitively, extra spaces and trailing punctuation ignored; numbers within 0.005). “Sourced” counts correct values that also carry a source box whose text matches the value. [`python scripts/evaluate.py`](scripts/evaluate.py). Hugging Face backend, Qwen2.5-1.5B-Instruct, Florence-2 for the scanned page, 12 November 2026. Wall-clock for all seven samples was 96 seconds, including model load. Per-document times were 9.0–22.1 seconds. The raw table is in [`docs/eval.md`](docs/eval.md).
+
+The API backend against a local llama.cpp server (Qwen2.5-1.5B-Instruct, Q4_K_M) got 52 of 61 fields correct: all 52 fields on the six text-layer PDFs, in 3.9–12.1 seconds each. The scanned invoice is scored 0/9 there, because that backend has no OCR unless a vision model is configured.
+
+## Why it matters
+
+A total without a source is a rumour. A total with a bounding box is a claim you can audit — from `5,496.68` back to the printed “SGD 5,496.68” on the page, and reject it if the box is wrong. That is the difference between an extract you retype to be safe, and an extract you can actually use.
+
+It fits anywhere a team already files PDFs and maintains a spreadsheet: accounts payable, contract intake, a records desk. The schema is a YAML file, so the fields can change without changing the code. The backend can be a hosted API or open models on your own machine; the rest of the pipeline stays the same.
 
 ## Quickstart
 
@@ -105,18 +108,36 @@ document-extractor batch samples --glob "invoice-*.pdf" --schema invoice --out r
 document-extractor serve
 ```
 
-### Using the API backend
+A schema is a YAML file that lists fields and their types (`string`, `date`, `number`, `integer`). See [`schemas/invoice.yaml`](schemas/invoice.yaml) and [`schemas/contract.yaml`](schemas/contract.yaml). Dates come back as `YYYY-MM-DD` and amounts as numbers.
 
-Any OpenAI-compatible endpoint works. In `.env`:
+`samples/` holds seven PDFs (four invoice layouts, two contracts, one image-only scan) with a ground-truth file for each. Tests use a mocked model and need no downloads: `pip install -e ".[dev]" && pytest`.
 
-```bash
-MS_BACKEND=api
-MS_API_BASE=https://your-provider.example/v1
-MS_API_KEY=your-api-key
-MS_MODEL=your-chat-model
-```
+## Backends
 
-To try it without a paid key, run an open model behind a local OpenAI-compatible server, for example [llama-cpp-python](https://github.com/abetlen/llama-cpp-python):
+<details>
+<summary>Two interchangeable backends — API key or open models. The rest of the pipeline does not change.</summary>
+
+Pick one with `MS_BACKEND` in `.env`.
+
+| | (a) Bring your own API key | (b) Open-source on Hugging Face |
+|---|---|---|
+| **What** | Any OpenAI-compatible endpoint | Open models, run locally with `transformers` |
+| **Set** | `MS_BACKEND=api`, `MS_API_BASE`, `MS_API_KEY`, `MS_MODEL` | `MS_BACKEND=hf`, optionally `MS_HF_MODEL` |
+| **Scanned pages** | `MS_VISION_MODEL` (a vision model on the same endpoint) | Florence-2 |
+| **Q&A retrieval** | `MS_EMBED_MODEL` if set, otherwise BM25 | bge-m3 |
+| **Good for** | Fastest start, hosted models | Data stays on your machines, no per-call cost |
+
+**Default open-source models**
+
+| Model | Used for | License |
+|---|---|---|
+| [`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) | field extraction and answers | Apache-2.0 |
+| [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3) | embeddings for retrieval | MIT |
+| [`florence-community/Florence-2-large`](https://huggingface.co/florence-community/Florence-2-large) | OCR for scanned pages (`transformers`-native copy of [`microsoft/Florence-2-large`](https://huggingface.co/microsoft/Florence-2-large)) | MIT |
+
+On a machine without a GPU, set `MS_HF_MODEL=Qwen/Qwen2.5-1.5B-Instruct`. The 7B model needs a GPU or a lot of memory. `MS_RETRIEVER=bm25` skips the bge-m3 download and uses keyword retrieval instead.
+
+To try the API backend without a paid key, run an open model behind a local OpenAI-compatible server, for example [llama-cpp-python](https://github.com/abetlen/llama-cpp-python):
 
 ```bash
 pip install "llama-cpp-python[server]" huggingface_hub \
@@ -126,39 +147,10 @@ python -m llama_cpp.server --model models/qwen2.5-1.5b-instruct-q4_k_m.gguf --n_
 # then: MS_API_BASE=http://127.0.0.1:8001/v1  MS_API_KEY=local  MS_MODEL=qwen2.5-1.5b-instruct-q4_k_m
 ```
 
-### Schemas
-
-A schema is a YAML file that lists fields and their types (`string`, `date`, `number`, `integer`). See [`schemas/invoice.yaml`](schemas/invoice.yaml) and [`schemas/contract.yaml`](schemas/contract.yaml). Dates come back as `YYYY-MM-DD` and amounts as numbers. The model is asked to copy each value as printed, and the value is then matched back to the words on the page to find its box.
-
-### Sample documents and tests
-
-`samples/` holds seven synthetic PDFs (four invoice layouts, two contracts, one image-only scan) with a ground-truth file for each. All names and figures in them are fictional.
-
-```bash
-pip install -e ".[dev]"
-python scripts/make_samples.py   # regenerate samples/
-pytest                           # uses a mocked model, no downloads
-python scripts/evaluate.py       # compare the configured backend with the ground truth
-```
-
-## Limitations
-
-- The samples are synthetic and have simple layouts. The project has not been measured on real-world documents.
-- On a CPU, extraction with the open models takes tens of seconds per document, and loading Qwen, bge-m3 and Florence-2 together needs several GB of memory. The 7B default needs a GPU.
-- Florence-2 reads a scanned page in one pass, so small or dense text can be misread. On the API backend, OCR through `MS_VISION_MODEL` is implemented but has only been tested with a mocked model.
-- Source boxes come from matching the value against the page text. If a value is printed more than once, the copy closest to a matching label is used, which is not always the one the model read.
-- Numeric dates such as `03.02.2026` are read day-first.
-- The web demo saves results under `.cache/results` and reuses them for the same file, schema and model.
+</details>
 
 ## Roadmap
 
-- [x] Repository scaffold and README
-- [x] PDF parsing with page and box coordinates
-- [x] Schema-driven field extraction
-- [x] Source citation per value
-- [x] Q&A over the document (RAG)
-- [x] Batch mode
-- [x] Web demo
 - [ ] Reranking retrieved passages with `BAAI/bge-reranker-v2-m3`
 - [ ] Scanned-page OCR tested with a real vision model on the API backend
 - [ ] Hosted demo
@@ -167,4 +159,4 @@ python scripts/evaluate.py       # compare the configured backend with the groun
 
 [MIT](LICENSE) © Modelshifts Technology Pte. Ltd.
 
-<p align="center"><sub>Part of the <a href="https://modelshifts.com/work">Modelshifts</a> showcase.</sub></p>
+<p align="center"><sub>Part of the <a href="https://modelshifts.com/work">Modelshifts</a> showcase. November 2026, v1.</sub></p>
